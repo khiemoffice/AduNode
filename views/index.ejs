@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>an ejs page</title>
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1>EJS</h1>
+    <p>This page is an ejs page and will show data from the server</p>
+    <h2><%= title %></h2>
+    <% components.forEach(function(component) { %>
+        <p>component: <%= component %> </p>
+    <% }); %>
+
+    <button id="clicked">click me</button>
+    <div id="updates"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        var button = document.getElementById('clicked');
+        button.onclick = function(e){
+            console.log('============= click button roi nhe',);
+            socket.emit('clicked message', 'clicked');
+        }
+
+        socket.on('clicked message', function(msg){
+            document.getElementById('updates').innerHTML = msg;
+        });
+    </script>
+</body>
+</html>
